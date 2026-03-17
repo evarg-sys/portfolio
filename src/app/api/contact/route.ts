@@ -26,14 +26,15 @@ export async function POST(request: Request) {
       <p>${message.trim().replace(/\n/g, "<br/>")}</p>
     `;
 
-    if (resend) {
-      const { error } = await resend.emails.send({ from, to, subject, html });
-      if (error) {
-        console.error("Resend error:", error);
-        return NextResponse.json({ error: "Failed to send email." }, { status: 500 });
-      }
-    } else {
-      console.log("[Contact form] No RESEND_API_KEY. Would have sent:", { to, subject, name, email });
+    if (!resend) {
+      console.error("[Contact form] RESEND_API_KEY is not set — email not sent.");
+      return NextResponse.json({ error: "Email service is not configured." }, { status: 500 });
+    }
+
+    const { error } = await resend.emails.send({ from, to, subject, html, replyTo: email.trim() });
+    if (error) {
+      console.error("Resend error:", error);
+      return NextResponse.json({ error: "Failed to send email." }, { status: 500 });
     }
 
     return NextResponse.json({ success: true });

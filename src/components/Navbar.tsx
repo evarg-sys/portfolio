@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import type { ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
@@ -14,7 +15,7 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-const socialLinks = [
+const socialLinks: { href: string; label: string; icon: ReactNode; internal?: boolean }[] = [
   {
     href: "https://github.com/evarg-sys",
     label: "GitHub",
@@ -34,6 +35,13 @@ const socialLinks = [
     icon: (
       <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
         <path d="M6.94 8.5H3.56V19.5h3.38zM5.25 3a1.97 1.97 0 100 3.94 1.97 1.97 0 000-3.94zM20.44 12.64c0-3.31-1.77-4.85-4.13-4.85-1.9 0-2.75 1.05-3.22 1.78V8.5H9.72c.04.71 0 11 0 11h3.37v-6.14c0-.33.02-.66.12-.89.26-.66.86-1.34 1.87-1.34 1.32 0 1.85 1.01 1.85 2.49v5.88h3.37z" />
+      </svg>
+    ),
+  },
+  {
+    href: "/resume",
+    label: "Resume",
+    internal: true,
       </svg>
     ),
   },
@@ -86,18 +94,29 @@ export function Navbar() {
         </div>
         <div className="flex items-center gap-3">
           <div className="hidden items-center gap-3 md:flex">
-            {socialLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={link.label}
-                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.025] text-zinc-200 transition-colors hover:border-white/[0.18] hover:bg-white/[0.07] hover:text-white"
-              >
-                {link.icon}
-              </a>
-            ))}
+            {socialLinks.map((link) =>
+              link.internal ? (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  aria-label={link.label}
+                  className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.025] text-zinc-200 transition-colors hover:border-white/[0.18] hover:bg-white/[0.07] hover:text-white"
+                >
+                  {link.icon}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.label}
+                  className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.025] text-zinc-200 transition-colors hover:border-white/[0.18] hover:bg-white/[0.07] hover:text-white"
+                >
+                  {link.icon}
+                </a>
+              )
+            )}
           </div>
           <Link
             href="/contact"
@@ -135,18 +154,30 @@ export function Navbar() {
                 </Link>
               ))}
               <div className="mt-3 flex gap-3">
-                {socialLinks.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.03] text-zinc-200"
-                    aria-label={link.label}
-                  >
-                    {link.icon}
-                  </a>
-                ))}
+                {socialLinks.map((link) =>
+                  link.internal ? (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.03] text-zinc-200"
+                      aria-label={link.label}
+                    >
+                      {link.icon}
+                    </Link>
+                  ) : (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.03] text-zinc-200"
+                      aria-label={link.label}
+                    >
+                      {link.icon}
+                    </a>
+                  )
+                )}
               </div>
               <Link
                 href="/contact"
