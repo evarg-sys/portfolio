@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
-const NOTIFY_EMAIL = process.env.CONTACT_EMAIL || "evarg22@uic.edu";
+const NOTIFY_EMAIL = process.env.CONTACT_EMAIL || "ericgeorge1606@gmail.com";
 
 export async function POST(request: Request) {
   try {
