@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
@@ -41,14 +41,32 @@ const socialLinks = [
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 24);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <motion.header
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 px-4 pt-3 sm:px-6"
+      className="fixed top-0 left-0 right-0 z-50 px-3 pt-3 sm:px-5"
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between rounded-[28px] border border-white/[0.08] bg-white/[0.04] px-5 py-4 shadow-[0_10px_40px_rgba(0,0,0,0.25)] backdrop-blur-xl">
+      <nav
+        className={`mx-auto flex max-w-7xl items-center justify-between rounded-[28px] px-5 py-4 backdrop-blur-2xl transition-all duration-300 ${
+          isScrolled
+            ? "border border-white/[0.08] bg-[#0a0a0a]/72 shadow-[0_16px_48px_rgba(0,0,0,0.32)]"
+            : "border border-white/[0.05] bg-[#0a0a0a]/38 shadow-[0_8px_30px_rgba(0,0,0,0.18)]"
+        }`}
+      >
         <Link
           href="/"
           className="font-display text-lg font-medium tracking-[-0.02em] text-white transition-opacity hover:opacity-80"
@@ -75,7 +93,7 @@ export function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={link.label}
-                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.03] text-zinc-200 transition-colors hover:border-white/[0.18] hover:bg-white/[0.07] hover:text-white"
+                className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.025] text-zinc-200 transition-colors hover:border-white/[0.18] hover:bg-white/[0.07] hover:text-white"
               >
                 {link.icon}
               </a>
@@ -83,7 +101,7 @@ export function Navbar() {
           </div>
           <Link
             href="/contact"
-            className="hidden rounded-full border border-white/[0.1] bg-white/[0.03] px-6 py-3 text-sm font-medium text-white transition-colors hover:border-white/[0.18] hover:bg-white/[0.07] sm:inline-block"
+            className="hidden rounded-full border border-white/[0.1] bg-white/[0.025] px-6 py-3 text-sm font-medium text-white transition-colors hover:border-white/[0.18] hover:bg-white/[0.07] sm:inline-block"
           >
             Get in touch
           </Link>
