@@ -2,23 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ResearchCard } from "@/components/ResearchCard";
-
-const research = [
-  {
-    title: "Emergency Response Routing AI",
-    abstract:
-      "Optimizing routes and resource allocation for disaster response using reinforcement learning and spatial analytics.",
-    pdfUrl: "#",
-    codeUrl: "#",
-  },
-  {
-    title: "CompCert Verification Research",
-    abstract:
-      "Formal verification and compiler correctness in verified systems.",
-    pdfUrl: "#",
-    codeUrl: "#",
-  },
-];
+import { research } from "@/data/research";
 
 export default function ResearchPage() {
   return (
@@ -27,19 +11,19 @@ export default function ResearchPage() {
         <motion.h1
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-display text-3xl font-bold text-white sm:text-4xl"
+          className="font-display text-3xl font-light text-white sm:text-4xl"
         >
           Research
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
+          transition={{ delay: 0.08 }}
           className="mt-2 text-zinc-500"
         >
-          Papers, abstracts, PDFs, and code
+          Papers, abstracts, PDFs, and code — edit links in <code className="rounded bg-white/10 px-1 py-0.5 text-xs">src/data/research.ts</code>
         </motion.p>
-        <div className="mt-12 grid gap-4 md:grid-cols-2">
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
           {research.map((r, i) => (
             <ResearchCard key={r.title} {...r} index={i} />
           ))}

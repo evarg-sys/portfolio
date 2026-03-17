@@ -9,8 +9,8 @@ const navLinks = [
   { href: "/about", label: "About" },
   { href: "/projects", label: "Projects" },
   { href: "/research", label: "Research" },
+  { href: "/courses", label: "Courses" },
   { href: "/photography", label: "Photography" },
-  { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -21,7 +21,7 @@ export function Navbar() {
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#0b0b0b]/80 backdrop-blur-md"
+      className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.06] bg-[#0a0a0a]/90 backdrop-blur-md"
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
         <Link
@@ -44,12 +44,9 @@ export function Navbar() {
         <div className="flex items-center gap-3">
           <Link
             href="/contact"
-            className="group hidden items-center gap-2 rounded-full bg-[#00e5ff] px-5 py-2.5 text-sm font-medium text-[#0b0b0b] transition-all hover:bg-[#00e5ff]/90 hover:shadow-lg hover:shadow-[#00e5ff]/20 sm:flex"
+            className="hidden rounded-full border border-white/20 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-white/40 hover:bg-white/5 sm:inline-block"
           >
             Get in touch
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#0b0b0b]/10 text-xs transition-transform group-hover:scale-110">
-              +
-            </span>
           </Link>
           <button
             type="button"
@@ -67,7 +64,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="border-t border-white/5 bg-[#0b0b0b] md:hidden"
+            className="border-t border-white/[0.06] bg-[#0a0a0a] md:hidden"
           >
             <div className="flex flex-col gap-1 px-6 py-4">
               {navLinks.map((link) => (
@@ -83,7 +80,7 @@ export function Navbar() {
               <Link
                 href="/contact"
                 onClick={() => setMobileOpen(false)}
-                className="mt-2 rounded-full bg-[#00e5ff] px-4 py-2.5 text-center text-sm font-medium text-[#0b0b0b]"
+                className="mt-2 rounded-full border border-white/20 px-4 py-2.5 text-center text-sm font-medium text-white"
               >
                 Get in touch
               </Link>
