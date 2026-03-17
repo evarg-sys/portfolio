@@ -4,12 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 export function PageIntro() {
-  const [visible, setVisible] = useState(() => {
-    if (typeof window === "undefined") return false;
-    if (sessionStorage.getItem("ev-intro")) return false;
-    sessionStorage.setItem("ev-intro", "1");
-    return true;
-  });
+  const [visible, setVisible] = useState(true);
 
   if (!visible) return null;
 
