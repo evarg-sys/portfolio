@@ -1,7 +1,32 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+
+function renderMessage(text: string) {
+  // Parse markdown links: [label](url)
+  const parts = text.split(/\[([^\]]+)\]\(([^)]+)\)/);
+  return parts.map((part, i) => {
+    if (i % 3 === 1) return null; // label — handled with url below
+    if (i % 3 === 2) {
+      // This is the URL; the label is the previous part
+      const label = parts[i - 1];
+      const url = part;
+      const isInternal = url.startsWith("/");
+      return isInternal ? (
+        <Link key={i} href={url} className="underline text-white hover:opacity-80">
+          {label}
+        </Link>
+      ) : (
+        <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="underline text-white hover:opacity-80">
+          {label}
+        </a>
+      );
+    }
+    return <span key={i}>{part}</span>;
+  });
+}
 
 const PLACEHOLDER_MESSAGE =
   "The assistant ran into an error. Try again in a moment or email evarg22@uic.edu.";
@@ -112,7 +137,7 @@ export function ChatbotWidget() {
                         : "bg-white/10 text-zinc-300"
                     }`}
                   >
-                    {msg.text}
+                    {msg.role === "assistant" ? renderMessage(msg.text) : msg.text}
                   </span>
                 </div>
               ))}
